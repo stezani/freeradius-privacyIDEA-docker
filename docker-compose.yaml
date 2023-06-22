@@ -1,0 +1,12 @@
+version: '3'
+services:
+  freeradius:
+          #image: freeradius/freeradius-server
+    image: frlep:latest
+    ports:
+      - 1812:1812/udp
+      - 1813:1813/udp
+    volumes:
+      - ./logs:/var/log/freeradius
+      - ./config:/etc/freeradius
+    restart: always
