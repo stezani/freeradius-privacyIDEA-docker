@@ -33,3 +33,15 @@ perl {
   perl_flags = "-T"
 }
 ```
+where form me `privacyidea_radius.pm` is located in config/mods-config/perl
+If you need the `privacyidea_radius.pm` file you can retrieve it once you have installed privacyIDEA and you can find it under `/usr/share/privacyidea/freeradius/privacyidea_radius.pm`
+- you must create a symlink under mods-enabled with
+```
+$> cd ../mods-enabled/
+$> ln -s ../mods-available/perl perl
+```
+- append to config/users file the string:
+```
+DEFAULT Auth-Type := perl
+```
+- 
