@@ -67,4 +67,4 @@ TIMEOUT = 30
 our @CONFIG_FILES = ("/etc/privacyidea/rlm_perl.ini", "/etc/freeradius/rlm_perl.ini", "/opt/privacyIDEA/rlm_perl.ini");
 ```
 
-After this changes, you must restart your container: if there are some issues check the `radiusd.log`
+After this changes, you must restart your container: if there are some issues check the `log/radiusd.log`
