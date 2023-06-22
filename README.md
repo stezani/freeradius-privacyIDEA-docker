@@ -44,4 +44,133 @@ $> ln -s ../mods-available/perl perl
 ```
 DEFAULT Auth-Type := perl
 ```
-- 
+- create new file located in config/sites-available/privacyidea
+```
+server default {
+
+ listen {
+
+   type = auth
+
+   ipaddr = *
+
+   port = 0
+
+   limit {
+
+      max_connections = 16
+
+      lifetime = 0
+
+      idle_timeout = 30
+
+   }
+
+ }
+
+ listen {
+
+   ipaddr = *
+
+   port = 0
+
+   type = acct
+
+   limit {
+
+   }
+
+ }
+
+authorize {
+
+   preprocess
+
+   digest
+
+   suffix
+
+   ntdomain
+
+   files
+
+   expiration
+
+   logintime
+
+   pap
+
+   update control {
+
+      Auth-Type := Perl
+
+   }
+
+}
+
+authenticate {
+
+   Auth-Type Perl {
+
+     perl
+
+   }
+
+   digest
+
+}
+
+preacct {
+
+   suffix
+
+   files
+
+}
+
+accounting {
+
+   detail
+
+}
+
+session {
+
+}
+
+post-auth {
+
+}
+
+pre-proxy {
+
+}
+
+post-proxy {
+
+}
+
+}
+```
+- create a symlink under config/sites-enabled like this:
+```
+$> cd config/sites-enabled
+$> ln -s ../sites-available/privacyidea privacyidea
+```
+- create a file rlm_perl.ini under config/ folder like this
+```
+# RLM_PERL.INI
+[Default]
+URL = https://your_privacyIDEA_installation/validate/check
+#REALM = someRealm
+#RESCONF = someResolver
+SSL_CHECK = true
+#DEBUG = true
+TIMEOUT = 30
+```
+- change the path in privacyidea_radius.pm:
+```
+our @CONFIG_FILES = ("/etc/privacyidea/rlm_perl.ini", "/etc/freeradius/rlm_perl.ini", "/opt/privacyIDEA/rlm_perl.ini");
+```
+
+After this changes, you must restart your container: if there are some issues check the `radiusd.log`
